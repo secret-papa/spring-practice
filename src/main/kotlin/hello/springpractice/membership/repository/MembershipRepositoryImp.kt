@@ -1,6 +1,6 @@
 package hello.springpractice.membership.repository
 
-import hello.springpractice.domain.Membership
+import hello.springpractice.membership.domain.Membership
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.RowMapper
@@ -15,6 +15,11 @@ class MembershipRepositoryImp(dataSource: DataSource): MembershipRepository {
     override fun save(membership: Membership) {
         val sql = "insert into membership(name) values (?)"
         template.update(sql, membership.name)
+    }
+
+    override fun findAll(): List<Membership> {
+        val sql = "select * from membership"
+        return template.query(sql, membershipRowMapper)
     }
 
     override fun findByName(membership: Membership): Membership? {

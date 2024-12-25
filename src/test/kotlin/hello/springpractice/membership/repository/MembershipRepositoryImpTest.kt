@@ -1,6 +1,6 @@
 package hello.springpractice.membership.repository
 
-import hello.springpractice.domain.Membership
+import hello.springpractice.membership.domain.Membership
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
@@ -20,6 +20,8 @@ class MembershipRepositoryImpTest(
     @AfterEach
     fun afterEach() {
         membershipRepository.deleteByName(Membership.KAKAO)
+        membershipRepository.deleteByName(Membership.NAVER)
+        membershipRepository.deleteByName(Membership.COOPANG)
     }
 
     @Test
@@ -37,6 +39,16 @@ class MembershipRepositoryImpTest(
 
         assertThat(kakaoMembership).isNotNull()
         assertThatThrownBy { membershipRepository.save(Membership.KAKAO) }.isInstanceOf(DuplicateKeyException::class.java)
+    }
+
+    @Test
+    fun `맴버쉽_전체_조회`() {
+        membershipRepository.save(Membership.KAKAO)
+        membershipRepository.save(Membership.NAVER)
+        membershipRepository.save(Membership.COOPANG)
+
+        val membershipList = membershipRepository.findAll()
+        assertThat(membershipList).hasSize(3)
     }
 
     @Test

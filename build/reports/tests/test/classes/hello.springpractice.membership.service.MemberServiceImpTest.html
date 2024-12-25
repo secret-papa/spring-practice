@@ -3,17 +3,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta http-equiv="x-ua-compatible" content="IE=edge"/>
-<title>Test results - MembershipRepositoryImpTest</title>
+<title>Test results - MemberServiceImpTest</title>
 <link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
 <link href="../css/style.css" rel="stylesheet" type="text/css"/>
 <script src="../js/report.js" type="text/javascript"></script>
 </head>
 <body>
 <div id="content">
-<h1>MembershipRepositoryImpTest</h1>
+<h1>MemberServiceImpTest</h1>
 <div class="breadcrumbs">
 <a href="../index.html">all</a> &gt; 
-<a href="../packages/hello.springpractice.membership.repository.html">hello.springpractice.membership.repository</a> &gt; MembershipRepositoryImpTest</div>
+<a href="../packages/hello.springpractice.membership.service.html">hello.springpractice.membership.service</a> &gt; MemberServiceImpTest</div>
 <div id="summary">
 <table>
 <tr>
@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">4</div>
+<div class="counter">1</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.534s</div>
+<div class="counter">0.497s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,23 +81,8 @@
 </tr>
 </thead>
 <tr>
-<td class="success">맴버쉽_등록()</td>
-<td class="success">0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">맴버쉽_등록_중복()</td>
-<td class="success">0.522s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">맴버쉽_이름_삭제()</td>
-<td class="success">0.005s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">맴버쉽_이름_조회()</td>
-<td class="success">0.005s</td>
+<td class="success">가입()</td>
+<td class="success">0.497s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -105,7 +90,7 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>17:13:35.174 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration hello.springpractice.SpringPracticeApplication for test class hello.springpractice.membership.repository.MembershipRepositoryImpTest
+<pre>18:50:55.158 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration hello.springpractice.SpringPracticeApplication for test class hello.springpractice.membership.service.MemberServiceImpTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -116,14 +101,14 @@
 
  :: Spring Boot ::                (v3.4.1)
 
-2024-12-25T17:13:35.353+09:00  INFO 98518 --- [spring-practice] [    Test worker] h.s.m.r.MembershipRepositoryImpTest      : Starting MembershipRepositoryImpTest using Java 21.0.3 with PID 98518 (started by seungha in /Users/seungha/Desktop/my/spring-practice)
-2024-12-25T17:13:35.354+09:00  INFO 98518 --- [spring-practice] [    Test worker] h.s.m.r.MembershipRepositoryImpTest      : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2024-12-25T17:13:35.668+09:00  INFO 98518 --- [spring-practice] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
-2024-12-25T17:13:35.679+09:00  INFO 98518 --- [spring-practice] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JDBC repository interfaces.
-2024-12-25T17:13:36.089+09:00  INFO 98518 --- [spring-practice] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-25T17:13:36.138+09:00  INFO 98518 --- [spring-practice] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/test user=USER
-2024-12-25T17:13:36.139+09:00  INFO 98518 --- [spring-practice] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-25T17:13:36.220+09:00  INFO 98518 --- [spring-practice] [    Test worker] h.s.m.r.MembershipRepositoryImpTest      : Started MembershipRepositoryImpTest in 0.977 seconds (process running for 1.563)
+2024-12-25T18:50:55.338+09:00  INFO 11148 --- [spring-practice] [    Test worker] h.s.m.service.MemberServiceImpTest       : Starting MemberServiceImpTest using Java 21.0.3 with PID 11148 (started by seungha in /Users/seungha/Desktop/my/spring-practice)
+2024-12-25T18:50:55.339+09:00  INFO 11148 --- [spring-practice] [    Test worker] h.s.m.service.MemberServiceImpTest       : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-12-25T18:50:55.650+09:00  INFO 11148 --- [spring-practice] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-12-25T18:50:55.661+09:00  INFO 11148 --- [spring-practice] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 JDBC repository interfaces.
+2024-12-25T18:50:56.082+09:00  INFO 11148 --- [spring-practice] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-25T18:50:56.133+09:00  INFO 11148 --- [spring-practice] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/test user=USER
+2024-12-25T18:50:56.134+09:00  INFO 11148 --- [spring-practice] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-25T18:50:56.219+09:00  INFO 11148 --- [spring-practice] [    Test worker] h.s.m.service.MemberServiceImpTest       : Started MemberServiceImpTest in 0.991 seconds (process running for 1.578)
 </pre>
 </span>
 </div>
@@ -146,7 +131,7 @@ WARNING: Dynamic loading of agents will be disallowed by default in a future rel
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.11.1</a> at 2024. 12. 25. 오후 5:13:36</p>
+<a href="http://www.gradle.org">Gradle 8.11.1</a> at 2024. 12. 25. 오후 6:50:56</p>
 </div>
 </div>
 </body>

@@ -1,4 +1,4 @@
-package hello.springpractice.domain
+package hello.springpractice.membership.domain
 
 enum class Membership {
     KAKAO,
