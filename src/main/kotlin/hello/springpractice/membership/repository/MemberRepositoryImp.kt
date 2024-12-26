@@ -42,6 +42,11 @@ class MemberRepositoryImp(dataSource: DataSource): MemberRepository {
         }
     }
 
+    override fun findAll(): List<Member> {
+       val sql = "select * from member"
+        return template.query(sql, memberRowMapper)
+    }
+
     override fun deleteById(id: String) {
         val sql = "delete from member where id=?"
         template.update(sql, id)

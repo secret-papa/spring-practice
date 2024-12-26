@@ -50,6 +50,19 @@ class MemberRepositoryImpTest(
     }
 
     @Test
+    fun `맴버_전체_조회`() {
+        val member1 = Member(name = "test", email = "test1@test.com", gender = "MALE")
+        val member2 = Member(name = "test", email = "test2@test.com", gender = "MALE")
+        memberRepository.save(member1)
+        memberRepository.save(member2)
+        val findMembers = memberRepository.findAll()
+
+        assertThat(findMembers).hasSize(2)
+        memberRepository.deleteById(member1.id)
+        memberRepository.deleteById(member2.id)
+    }
+
+    @Test
     fun `맴버_삭제`() {
        memberRepository.save(member)
         val findMember: Member? = memberRepository.findById(member.id)
