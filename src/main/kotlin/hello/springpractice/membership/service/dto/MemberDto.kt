@@ -7,4 +7,4 @@ data class MemberDto(
     val email: String,
     val gender: String,
     val birthDate: LocalDate?
-){}
+)

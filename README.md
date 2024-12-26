@@ -65,3 +65,11 @@ CREATE TABLE `order_product` (
 - `GET /apis/products`: 전체 상품 조회
 - `GET /apis/products/{id}`: 단일 상품 조회
 - `POST /apis/products/`: 상품 생성
+
+주문
+- `POST /apis/order`: 주문 생성
+  -  http POST :8080/apis/orders/ memberId={memberId} productIds:='["{productId}", "productId"]'
+
+
+
+ 

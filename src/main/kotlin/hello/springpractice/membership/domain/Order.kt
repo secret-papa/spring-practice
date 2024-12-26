@@ -8,4 +8,8 @@ class Order(
     val memberId: String,
     val products: List<Product>,
     val createdAt: Instant = Instant.now(),
-)
+) {
+    fun getTotalPrice(): Number {
+        return products.sumOf { product -> product.price.toDouble() }
+    }
+}
