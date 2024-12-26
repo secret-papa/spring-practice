@@ -30,6 +30,14 @@ create table product
     price int,
     primary key (id)
 )
+
+create table `order` (
+    `id` VARCHAR(255) NOT NULL,
+    `totalPrice` INT NOT NULL,
+    `memberId` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`memberId`) REFERENCES `member`(`id`)
+);
 ```
 
 ### apis
