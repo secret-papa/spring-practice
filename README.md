@@ -39,9 +39,10 @@ create table `order` (
     FOREIGN KEY (`memberId`) REFERENCES `member`(`id`)
 );
 
-CREATE TABLE `order_product` (
+CREATE TABLE `orderItem` (
     `orderId` VARCHAR(255) NOT NULL,
     `productId` VARCHAR(255) NOT NULL,
+    `quantity` INT NOT NULL,
     PRIMARY KEY (`orderId`, `productId`),
     FOREIGN KEY (`orderId`) REFERENCES `order`(`id`),
     FOREIGN KEY (`productId`) REFERENCES `product`(`id`)
