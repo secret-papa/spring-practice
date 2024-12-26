@@ -20,6 +20,11 @@ class OrderRepositoryImp(dataSource: DataSource): OrderRepository {
     }
 
     override fun findById(id: String): Order {
+        val sql = "select o.id, o.memberId, o.createdAt from order o join order_product op on o.id = op.orderId join product p on p.id = op.productId where o.orderId = ?"
+
+//        TODO:: 해야함
+        template.queryForObject(sql, { rs, _ ->
+        }, id)
         return Order(products = listOf(), memberId = "")
     }
 }
