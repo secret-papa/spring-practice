@@ -1,5 +1,6 @@
 package hello.springpractice.membership.repository
 
+import hello.springpractice.membership.domain.Member
 import hello.springpractice.membership.domain.Membership
 import hello.springpractice.membership.domain.Partnership
 import org.springframework.dao.EmptyResultDataAccessException
@@ -49,5 +50,10 @@ class MembershipRepositoryImp(dataSource: DataSource): MembershipRepository {
     override fun deleteByCode(code: Number) {
         val sql = "delete from membership where code = ?"
         template.update(sql, code)
+    }
+
+    override fun mappingMemberAndMembership(member: Member, membership: Membership) {
+        val sql = "insert into member_membership (member, membership) values (?, ?)"
+        template.update(sql, member.id, membership.code)
     }
 }

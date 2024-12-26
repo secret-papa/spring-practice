@@ -1,5 +1,6 @@
 package hello.springpractice.membership.repository
 
+import hello.springpractice.membership.domain.Member
 import hello.springpractice.membership.domain.Membership
 import hello.springpractice.membership.domain.Partnership
 import org.assertj.core.api.Assertions.*
