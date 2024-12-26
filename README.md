@@ -60,3 +60,8 @@ CREATE TABLE `order_product` (
 - `GET /apis/membership/members`: 전체 맴버쉽 별 가입 맴버
 - `POST /apis/membership`: 맴버쉽 생성
 - `POST /apis/membership/sign-up`: 맴버쉽 가입
+
+상품
+- `GET /apis/products`: 전체 상품 조회
+- `GET /apis/products/{id}`: 단일 상품 조회
+- `POST /apis/products/`: 상품 생성
