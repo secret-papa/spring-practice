@@ -56,4 +56,23 @@ class MembershipRepositoryImp(dataSource: DataSource): MembershipRepository {
         val sql = "insert into member_membership (member, membership) values (?, ?)"
         template.update(sql, member.id, membership.code)
     }
+
+    override fun findAllMembershipMember(): HashMap<Partnership, MutableList<Member>> {
+        val sql = "select m.id, m.name, m.email, m.gender, m.birthDate, ms.name as partnership from member m join member_membership m_ms on m.id = m_ms.member join membership ms on m_ms.membership = ms.code;"
+        val result = HashMap<Partnership, MutableList<Member>>()
+
+        template.query(sql)  { rs, _ ->
+            val member = Member(
+                id = rs.getString("id"),
+                name = rs.getString("name"),
+                email = rs.getString("email"),
+                gender = rs.getString("gender"),
+                birthDate = rs.getDate("birthDate").toLocalDate()
+            )
+
+            result.computeIfAbsent(Partnership.valueOf( rs.getString("partnership"))) { mutableListOf() }.add(member)
+        }
+
+        return result
+    }
 }

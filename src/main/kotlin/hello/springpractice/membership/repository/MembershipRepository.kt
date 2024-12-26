@@ -11,4 +11,5 @@ interface MembershipRepository {
     fun findByCode(code: Number): Membership?
     fun deleteByCode(code: Number)
     fun mappingMemberAndMembership(member: Member, membership: Membership)
+    fun findAllMembershipMember(): HashMap<Partnership, MutableList<Member>>
 }
