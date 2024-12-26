@@ -21,15 +21,16 @@ class MembershipController(
         return membershipRepository.findAll()
     }
 
-    @PostMapping("/")
-    fun saveMembership(@RequestBody membershipDto: MembershipDto): ResponseEntity<String> {
-        membershipService.save(membershipDto)
-        return ResponseEntity.ok("ok")
-    }
 
     @GetMapping("/members")
     fun findAllSignUpMember(): HashMap<Partnership, MutableList<Member>> {
        return membershipRepository.findAllMembershipMember()
+    }
+
+    @PostMapping("/")
+    fun saveMembership(@RequestBody membershipDto: MembershipDto): ResponseEntity<String> {
+        membershipService.save(membershipDto)
+        return ResponseEntity.ok("ok")
     }
 
     @PostMapping("/sign-up")

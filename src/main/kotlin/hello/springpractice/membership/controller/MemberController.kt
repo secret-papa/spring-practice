@@ -23,13 +23,14 @@ class MemberController(
         return memberRepository.findById(id)
     }
 
+    @GetMapping("/{id}/membership")
+    fun findSignUpMembership(@PathVariable id: String): List<Membership> {
+        return memberRepository.findSignUpMembership(id)
+    }
+
     @PostMapping("/")
     fun joinMember(@RequestBody memberDto: MemberDto): Member {
         return memberService.register(memberDto)
     }
 
-    @GetMapping("/{id}/membership")
-    fun findSignUpMembership(@PathVariable id: String): List<Membership> {
-        return memberRepository.findSignUpMembership(id)
-    }
 }

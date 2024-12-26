@@ -23,3 +23,16 @@ create table member_membership
     primary key (member, membership)
 )
 ```
+
+### apis
+맴버
+- `GET /apis/members`: 전체 맴버 조회
+- `GET /apis/members/{id}`: 단일 맴버 조회
+- `GET /apis/members/{id}/membership`: 가입한 맴버쉽 조회
+- `POST /apis/members`: 맴버 생성
+
+맴버쉽
+- `GET /apis/membership`: 전체 맴버쉽 조회
+- `GET /apis/membership/members`: 전체 맴버쉽 별 가입 맴버
+- `POST /apis/membership`: 맴버쉽 생성
+- `POST /apis/membership/sign-up`: 맴버쉽 가입
