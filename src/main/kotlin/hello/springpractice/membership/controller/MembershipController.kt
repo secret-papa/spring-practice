@@ -1,10 +1,24 @@
 package hello.springpractice.membership.controller
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import hello.springpractice.membership.domain.Membership
+import hello.springpractice.membership.repository.MembershipRepository
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/apis/membership")
-class MembershipController {
+class MembershipController(
+    private val membershipRepository: MembershipRepository
+) {
+    @GetMapping("/")
+    fun findAllMembership(): List<Membership> {
+        return membershipRepository.findAll()
+    }
+
+    @PostMapping("/")
+    fun saveMembership(@RequestBody membership: Membership): ResponseEntity<String> {
+        membershipRepository.save(membership)
+
+        return ResponseEntity.ok("ok")
+    }
 }
