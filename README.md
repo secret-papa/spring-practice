@@ -38,6 +38,14 @@ create table `order` (
     PRIMARY KEY (`id`),
     FOREIGN KEY (`memberId`) REFERENCES `member`(`id`)
 );
+
+CREATE TABLE `order_product` (
+    `orderId` VARCHAR(255) NOT NULL,
+    `productId` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`orderId`, `productId`),
+    FOREIGN KEY (`orderId`) REFERENCES `order`(`id`),
+    FOREIGN KEY (`productId`) REFERENCES `product`(`id`)
+);
 ```
 
 ### apis
