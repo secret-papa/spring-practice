@@ -22,6 +22,14 @@ create table member_membership
     foreign key (membership) references membership (code),
     primary key (member, membership)
 )
+
+create table product
+(
+    id varchar(255),
+    name varchar(255),
+    price int,
+    primary key (id)
+)
 ```
 
 ### apis
