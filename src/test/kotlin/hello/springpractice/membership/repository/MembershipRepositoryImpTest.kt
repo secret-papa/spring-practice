@@ -1,6 +1,7 @@
 package hello.springpractice.membership.repository
 
 import hello.springpractice.membership.domain.Membership
+import hello.springpractice.membership.domain.Partnership
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
@@ -19,52 +20,59 @@ class MembershipRepositoryImpTest(
 
     @AfterEach
     fun afterEach() {
-        membershipRepository.deleteByName(Membership.KAKAO)
-        membershipRepository.deleteByName(Membership.NAVER)
-        membershipRepository.deleteByName(Membership.COOPANG)
+        membershipRepository.deleteByCode(400)
+        membershipRepository.deleteByCode(500)
+        membershipRepository.deleteByCode(600)
     }
 
     @Test
     fun `맴버쉽_등록`() {
-        membershipRepository.save(Membership.KAKAO)
-        val kakaoMembership: Membership? = membershipRepository.findByName(Membership.KAKAO)
+        val memberShip = Membership(code = 400, partnership = Partnership.KAKAO_Test)
+        membershipRepository.save(memberShip)
 
+        val kakaoMembership: Membership? = membershipRepository.findByCode(memberShip.code)
         assertThat(kakaoMembership).isNotNull()
     }
 
     @Test
     fun `맴버쉽_등록_중복`() {
-        membershipRepository.save(Membership.KAKAO)
-        val kakaoMembership: Membership? = membershipRepository.findByName(Membership.KAKAO)
+        val membership1 = Membership(code = 400, partnership = Partnership.KAKAO_Test)
+        val sameAsMembership1 = Membership(code = 500, partnership = Partnership.KAKAO_Test)
+        membershipRepository.save(membership1)
 
-        assertThat(kakaoMembership).isNotNull()
-        assertThatThrownBy { membershipRepository.save(Membership.KAKAO) }.isInstanceOf(DuplicateKeyException::class.java)
+
+        assertThatThrownBy { membershipRepository.save(sameAsMembership1) }.isInstanceOf(DuplicateKeyException::class.java)
     }
 
     @Test
     fun `맴버쉽_전체_조회`() {
-        membershipRepository.save(Membership.KAKAO)
-        membershipRepository.save(Membership.NAVER)
-        membershipRepository.save(Membership.COOPANG)
+        val kakaoMemberShip = Membership(code = 400, partnership = Partnership.KAKAO_Test)
+        val naverMembership = Membership(code = 500, partnership = Partnership.NAVER_Test)
+        val coopangMembership = Membership(code = 600, partnership = Partnership.COOPANG_Test)
+        membershipRepository.save(kakaoMemberShip)
+        membershipRepository.save(naverMembership)
+        membershipRepository.save(coopangMembership)
 
         val membershipList = membershipRepository.findAll()
         assertThat(membershipList).hasSize(3)
     }
 
     @Test
-    fun `맴버쉽_이름_조회`() {
-        membershipRepository.save(Membership.KAKAO)
-        val kakaoMembership: Membership? = membershipRepository.findByName(Membership.KAKAO)
-        assertThat(kakaoMembership?.name).isEqualTo(Membership.KAKAO.name)
+    fun `맴버쉽_파트너쉽_조회`() {
+        val kakaoMemberShip = Membership(code = 400, partnership = Partnership.KAKAO_Test)
+        membershipRepository.save(kakaoMemberShip)
+        val kakaoMembership: Membership? = membershipRepository.findByPartnership(kakaoMemberShip.partnership)
+        assertThat(kakaoMembership?.partnership?.name).isEqualTo(Partnership.KAKAO_Test.name)
     }
 
     @Test
-    fun `맴버쉽_이름_삭제`() {
-        membershipRepository.save(Membership.KAKAO)
-        membershipRepository.deleteByName(Membership.KAKAO)
+    fun `맴버쉽_코드_삭제`() {
+        val kakaoMemberShip = Membership(code = 400, partnership = Partnership.KAKAO_Test)
+        membershipRepository.save(kakaoMemberShip)
+        membershipRepository.deleteByCode(kakaoMemberShip.code)
 
-        val kakaoMembership: Membership? = membershipRepository.findByName(Membership.KAKAO)
-        assertThat(kakaoMembership).isNull()
+        val findMembership: Membership? = membershipRepository.findByCode(kakaoMemberShip.code)
+        assertThat(findMembership).isNull()
     }
 
     @TestConfiguration

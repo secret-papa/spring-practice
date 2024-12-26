@@ -1,7 +1,7 @@
 package hello.springpractice.membership.service
 
-import hello.springpractice.membership.domain.Membership
+import hello.springpractice.membership.service.dto.MembershipDto
 
 interface MembershipService {
-    fun save(membership: Membership)
+    fun save(membershipDto: MembershipDto)
 }
