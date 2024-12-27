@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
+import java.util.HashSet
 import javax.sql.DataSource
 
 @Repository
@@ -24,23 +25,6 @@ class OrderRepositoryImp(dataSource: DataSource): OrderRepository {
 
         return order
     }
-
-//    override fun findAll(): List<Order> {
-//        val sql = """
-//            SELECT
-//                o.id AS orderId,
-//                o.memberId AS orderMemberId,
-//                o.createdAt AS orderCreatedAt,
-//                oi.quantity AS orderItemQuantity,
-//                p.id AS productId,
-//                p.name AS productName,
-//                p.price AS productPrice
-//            FROM `order` o
-//            JOIN orderItem oi ON o.id = oi.orderId
-//            JOIN product p ON p.id = oi.productId
-//        """.trimIndent()
-//
-//    }
 
     override fun findById(id: String): Order? {
         val sql = """
@@ -81,5 +65,50 @@ class OrderRepositoryImp(dataSource: DataSource): OrderRepository {
         }, id)
 
         return order
+    }
+
+    override fun findByMemberId(memberId: String): List<Order> {
+        val sql = """
+            SELECT 
+                o.id AS orderId, 
+                o.memberId AS orderMemberId, 
+                o.createdAt AS orderCreatedAt, 
+                oi.quantity AS orderItemQuantity, 
+                p.id AS productId, 
+                p.name AS productName, 
+                p.price AS productPrice 
+            FROM `order` o 
+            JOIN orderItem oi ON o.id = oi.orderId 
+            JOIN product p ON p.id = oi.productId 
+            WHERE o.memberId = ?
+        """.trimIndent()
+
+        val orders = hashMapOf<String, Order>()
+
+        template.query(sql, {rs, _ ->
+            val orderItem = OrderItem(
+                product = Product(
+                    id = rs.getString("productId"),
+                    name = rs.getString("productName"),
+                    price = rs.getInt("productPrice")
+                ),
+                quantity = rs.getInt("orderItemQuantity"),
+            )
+
+            if (!orders.containsKey(rs.getString("orderId"))) {
+                val order = Order(
+                    id = rs.getString("orderId"),
+                    memberId = rs.getString("memberId"),
+                    createdAt = rs.getTimestamp("orderCreatedAt").toInstant(),
+                    items = mutableListOf(orderItem)
+                )
+                orders[rs.getString("orderId")] = order
+            } else {
+                orders[rs.getString("orderId")]?.addItem(orderItem)
+            }
+
+        }, memberId)
+
+        return orders.values.toList()
     }
 }
