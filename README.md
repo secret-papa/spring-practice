@@ -35,6 +35,9 @@ create table `order` (
     `id` VARCHAR(255) NOT NULL,
     `memberId` VARCHAR(255) NOT NULL,
     `createdAt` DATE NOT NULL,
+    `originPrice` INT NOT NULL,
+    `discountPrice` INT NOT NULL,
+    `totalPrice` INT NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`memberId`) REFERENCES `member`(`id`)
 );

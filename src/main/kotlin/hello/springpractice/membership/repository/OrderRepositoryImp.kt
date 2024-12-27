@@ -4,10 +4,7 @@ import hello.springpractice.membership.domain.Order
 import hello.springpractice.membership.domain.OrderItem
 import hello.springpractice.membership.domain.Product
 import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.jdbc.core.RowMapper
-import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
-import java.util.HashSet
 import javax.sql.DataSource
 
 @Repository
@@ -15,10 +12,10 @@ class OrderRepositoryImp(dataSource: DataSource): OrderRepository {
     private val template = JdbcTemplate(dataSource)
 
     override fun save(order: Order): Order {
-        val insertOrderSql = "insert into `order` (id, memberId, createdAt) values (?, ?, ?)"
+        val insertOrderSql = "insert into `order` (id, memberId, originPrice, discountPrice, totalPrice, createdAt) values (?, ?, ?, ?, ? ,?)"
         val insertOrderItemSql = "insert into orderItem (orderId, productId, quantity) values (?, ?, ?)"
 
-        template.update(insertOrderSql, order.id, order.memberId, order.createdAt)
+        template.update(insertOrderSql, order.id, order.memberId, order.originalPrice, order.discountPrice, order.totalPrice, order.createdAt)
         order.items.forEach {
            template.update(insertOrderItemSql, order.id, it.product.id, it.quantity)
         }
@@ -32,6 +29,8 @@ class OrderRepositoryImp(dataSource: DataSource): OrderRepository {
                 o.id AS orderId, 
                 o.memberId AS orderMemberId, 
                 o.createdAt AS orderCreatedAt, 
+                o.originPrice AS orderOriginPrice,
+                o.discountPrice AS orderDiscountPrice,
                 oi.quantity AS orderItemQuantity, 
                 p.id AS productId, 
                 p.name AS productName, 
@@ -56,6 +55,8 @@ class OrderRepositoryImp(dataSource: DataSource): OrderRepository {
                 order = Order(
                     id = rs.getString("orderId"),
                     memberId = rs.getString("memberId"),
+                    originalPrice = rs.getInt("orderOriginPrice"),
+                    discountPrice = rs.getInt("orderDiscountPrice"),
                     createdAt = rs.getTimestamp("orderCreatedAt").toInstant(),
                     items = mutableListOf(orderItem)
                 )
@@ -72,6 +73,8 @@ class OrderRepositoryImp(dataSource: DataSource): OrderRepository {
             SELECT 
                 o.id AS orderId, 
                 o.memberId AS orderMemberId, 
+                o.originPrice AS orderOriginPrice,
+                o.discountPrice AS orderDiscountPrice,
                 o.createdAt AS orderCreatedAt, 
                 oi.quantity AS orderItemQuantity, 
                 p.id AS productId, 
@@ -99,6 +102,8 @@ class OrderRepositoryImp(dataSource: DataSource): OrderRepository {
                 val order = Order(
                     id = rs.getString("orderId"),
                     memberId = rs.getString("memberId"),
+                    originalPrice = rs.getInt("orderOriginPrice"),
+                    discountPrice = rs.getInt("orderDiscountPrice"),
                     createdAt = rs.getTimestamp("orderCreatedAt").toInstant(),
                     items = mutableListOf(orderItem)
                 )
