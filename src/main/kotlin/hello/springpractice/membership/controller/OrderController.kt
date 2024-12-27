@@ -7,10 +7,7 @@ import hello.springpractice.membership.repository.OrderRepository
 import hello.springpractice.membership.repository.ProductRepository
 import hello.springpractice.membership.service.dto.OrderDto
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/apis/orders")
@@ -19,6 +16,11 @@ class OrderController(
     private val productRepository: ProductRepository,
     private val orderRepository: OrderRepository
 ) {
+    @GetMapping("/{id}")
+    fun findOrder(@PathVariable id: String): Order? {
+        return orderRepository.findById(id)
+    }
+
     @PostMapping("/")
     fun createOrder(@RequestBody orderDto: OrderDto): Order {
         memberRepository.findById(orderDto.memberId) ?: throw NotFoundException()
@@ -28,7 +30,7 @@ class OrderController(
             OrderItem(
                 product = product,
                 quantity = orderItem.quantity
-            )}
+            )}.toMutableList()
 
         val order = Order(
             memberId = orderDto.memberId,

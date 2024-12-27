@@ -1,9 +1,6 @@
 package hello.springpractice.membership.domain
 
-import java.util.*
-
-class OrderItem(
-    val id: String = UUID.randomUUID().toString(),
+data class OrderItem(
     val product: Product,
     val quantity: Int
 ) {

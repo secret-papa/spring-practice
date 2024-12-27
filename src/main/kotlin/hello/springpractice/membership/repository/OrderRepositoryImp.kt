@@ -1,7 +1,11 @@
 package hello.springpractice.membership.repository
 
 import hello.springpractice.membership.domain.Order
+import hello.springpractice.membership.domain.OrderItem
+import hello.springpractice.membership.domain.Product
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.RowMapper
+import org.springframework.jdbc.core.queryForObject
 import org.springframework.stereotype.Repository
 import javax.sql.DataSource
 
@@ -21,13 +25,61 @@ class OrderRepositoryImp(dataSource: DataSource): OrderRepository {
         return order
     }
 
-    override fun findById(id: String): Order? {
-//        val sql = "select o.id, o.memberId, o.createdAt from order o join order_product op on o.id = op.orderId join product p on p.id = op.productId where o.orderId = ?"
+//    override fun findAll(): List<Order> {
+//        val sql = """
+//            SELECT
+//                o.id AS orderId,
+//                o.memberId AS orderMemberId,
+//                o.createdAt AS orderCreatedAt,
+//                oi.quantity AS orderItemQuantity,
+//                p.id AS productId,
+//                p.name AS productName,
+//                p.price AS productPrice
+//            FROM `order` o
+//            JOIN orderItem oi ON o.id = oi.orderId
+//            JOIN product p ON p.id = oi.productId
+//        """.trimIndent()
 //
-////        TODO:: 해야함
-//        template.queryForObject(sql, { rs, _ ->
-//        }, id)
-//        return Order(products = listOf(), memberId = "")
-        return null
+//    }
+
+    override fun findById(id: String): Order? {
+        val sql = """
+            SELECT 
+                o.id AS orderId, 
+                o.memberId AS orderMemberId, 
+                o.createdAt AS orderCreatedAt, 
+                oi.quantity AS orderItemQuantity, 
+                p.id AS productId, 
+                p.name AS productName, 
+                p.price AS productPrice 
+            FROM `order` o 
+            JOIN orderItem oi ON o.id = oi.orderId 
+            JOIN product p ON p.id = oi.productId 
+            WHERE o.id = ?
+        """.trimIndent()
+        var order: Order? = null
+
+        template.query(sql, {rs, _ ->
+            val orderItem = OrderItem(
+                product = Product(
+                    id = rs.getString("productId"),
+                    name = rs.getString("productName"),
+                    price = rs.getInt("productPrice")
+                ),
+                quantity = rs.getInt("orderItemQuantity"),
+            )
+            if (order == null) {
+                order = Order(
+                    id = rs.getString("orderId"),
+                    memberId = rs.getString("memberId"),
+                    createdAt = rs.getTimestamp("orderCreatedAt").toInstant(),
+                    items = mutableListOf(orderItem)
+                )
+            } else {
+                order!!.addItem(orderItem)
+            }
+        }, id)
+
+        return order
     }
 }
