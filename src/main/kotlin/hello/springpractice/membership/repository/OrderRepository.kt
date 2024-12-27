@@ -4,5 +4,5 @@ import hello.springpractice.membership.domain.Order
 
 interface OrderRepository {
     fun save(order: Order): Order
-    fun findById(id: String): Order
+    fun findById(id: String): Order?
 }

@@ -10,21 +10,24 @@ class OrderRepositoryImp(dataSource: DataSource): OrderRepository {
     private val template = JdbcTemplate(dataSource)
 
     override fun save(order: Order): Order {
-        val sql = "insert into `order` (id, memberId, createdAt) values (?, ?, ?)"
-        val sql2 = "insert into order_product (orderId, productId) values (?, ?)"
+        val insertOrderSql = "insert into `order` (id, memberId, createdAt) values (?, ?, ?)"
+        val insertOrderItemSql = "insert into orderItem (orderId, productId, quantity) values (?, ?, ?)"
 
-        template.update(sql, order.id, order.memberId, order.createdAt)
-        order.products.forEach { template.update(sql2, order.id, it.id)}
+        template.update(insertOrderSql, order.id, order.memberId, order.createdAt)
+        order.items.forEach {
+           template.update(insertOrderItemSql, order.id, it.product.id, it.quantity)
+        }
 
         return order
     }
 
-    override fun findById(id: String): Order {
-        val sql = "select o.id, o.memberId, o.createdAt from order o join order_product op on o.id = op.orderId join product p on p.id = op.productId where o.orderId = ?"
-
-//        TODO:: 해야함
-        template.queryForObject(sql, { rs, _ ->
-        }, id)
-        return Order(products = listOf(), memberId = "")
+    override fun findById(id: String): Order? {
+//        val sql = "select o.id, o.memberId, o.createdAt from order o join order_product op on o.id = op.orderId join product p on p.id = op.productId where o.orderId = ?"
+//
+////        TODO:: 해야함
+//        template.queryForObject(sql, { rs, _ ->
+//        }, id)
+//        return Order(products = listOf(), memberId = "")
+        return null
     }
 }

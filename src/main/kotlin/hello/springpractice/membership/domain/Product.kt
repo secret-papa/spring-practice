@@ -5,5 +5,5 @@ import java.util.*
 class Product(
     val id: String = UUID.randomUUID().toString(),
     val name: String,
-    val price: Number
+    val price: Int
 )

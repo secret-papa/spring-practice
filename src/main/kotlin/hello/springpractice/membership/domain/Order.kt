@@ -6,10 +6,10 @@ import java.util.*
 class Order(
     val id: String = UUID.randomUUID().toString(),
     val memberId: String,
-    val products: List<Product>,
+    val items: List<OrderItem>,
     val createdAt: Instant = Instant.now(),
 ) {
-    fun getTotalPrice(): Number {
-        return products.sumOf { product -> product.price.toDouble() }
+    fun getTotalPrice(): Int {
+        return items.map { it.getPrice() }.sum()
     }
 }

@@ -33,8 +33,8 @@ create table product
 
 create table `order` (
     `id` VARCHAR(255) NOT NULL,
-    `totalPrice` INT NOT NULL,
     `memberId` VARCHAR(255) NOT NULL,
+    `createdAt` DATE NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`memberId`) REFERENCES `member`(`id`)
 );
